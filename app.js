@@ -2,11 +2,14 @@ require('dotenv').config()
 
 const express = require('express')
 const path = require('path')
+const connectDB = require('./config/connection')
 const app = express()
+
+connectDB()
 
 app.set('view engine', 'ejs')
 
-app.use(express.urlencoded({ extended: false }))
+// app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
