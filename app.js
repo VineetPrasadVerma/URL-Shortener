@@ -4,6 +4,7 @@ const express = require('express')
 const path = require('path')
 const connectDB = require('./config/connection')
 const indexRoutes = require('./routes/indexRoutes')
+const urlRoutes = require('./routes/UrlRoutes')
 // const cors = require('cors')
 const app = express()
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRoutes)
+app.use('/url', urlRoutes)
 
 app.listen(process.env.PORT, () => {
   console.log(`Server started on port ${process.env.PORT}`)
