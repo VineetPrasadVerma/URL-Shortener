@@ -20,7 +20,4 @@ function shortURLToId (url) {
   return id
 }
 
-// const t = Date.now()
-// console.log(t)
-// console.log(idToShortURL(t))
-// console.log(shortURLToId(idToShortURL(t)))
+module.exports = { idToShortURL, shortURLToId }
