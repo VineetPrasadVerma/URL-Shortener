@@ -25,7 +25,7 @@ UrlQueries.createShortURL = async (req, res) => {
     //   res.redirect('/')
     // }
 
-    const newUrl = await Url.create({ _id: timeStamp, fullURL: fullURL, shortURL: shortUrlCode })
+    const newUrl = await Url.create({ _id: timeStamp, fullURL, shortURL: shortUrlCode })
     res.redirect('/')
   } catch (e) {
     console.log(e)
