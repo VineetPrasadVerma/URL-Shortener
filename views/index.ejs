@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS only -->
-    <link rel="stylesheet" href="index.css"/>
+    <link rel="stylesheet" href="/index.css"/>
+    <script type='text/javascript' defer src='/index.js'></script>
+        
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>URL Shortener</title>
 </head>
@@ -13,7 +15,7 @@
         <h1>
             URL SHORTENER
         </h1>
-        <form action="/shortUrl" method="POST" class="my-4 form-inline">
+        <form action="/url/new" method="POST" class="my-4 form-inline">
             <label for="fullURL" class="sr-only">URL</label>
             <input type="url" id="fullURL" name="fullURL" placeholder="URL" required class="form-control col mr-2">
             <button class="btn btn-success" type="submit">Shrink</button>
@@ -28,11 +30,11 @@
                 </tr>
             </thead>
             <tbody>
-                <% shortURLs.forEach(shortURL => { %>
+                <% Urls.forEach(url => { %>
                     <tr>
-                        <td><a href="<%= shortURL.fullURL %> "><%= shortURL.fullURL %>  </a></td>
-                        <td><a href="<%= shortURL.shortURL %> "><%= shortURL.shortURL %>  </a></td>
-                        <td><%= shortURL.clicks %></td>
+                        <td><a href="<%= url.fullURL %> "><%= url.fullURL %>  </a></td>
+                        <td><a href="/url/<%= url.shortURL %> "><%= url.shortURL %>  </a></td>
+                        <td><%= url.clicks %></td>
                     </tr>
                 <% }) %> 
             </tbody>
