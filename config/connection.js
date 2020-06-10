@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const URI = process.env.DATABASE_URL
+const URI = 'mongodb://localhost/url-shortener'
 
 const connectDB = async () => {
   try {

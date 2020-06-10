@@ -1,7 +1,9 @@
 const express = require('express')
-const router = express.Router()
-const UrlQueries = require('../controllers/UrlController')
+const router = express.Router({ mergeParams: true })
+const { readUrl, idFromShortURL } = require('../controllers/UrlController')
 
-router.get('/', UrlQueries.readUrl)
+router.get('/', readUrl)
+
+router.get('/:shortUrl', idFromShortURL)
 
 module.exports = router

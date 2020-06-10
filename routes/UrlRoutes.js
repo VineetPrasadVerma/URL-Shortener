@@ -1,9 +1,7 @@
 const express = require('express')
-const router = express.Router({ mergeParams: true })
-const UrlQueries = require('../controllers/UrlController')
+const router = express.Router()
+const { createShortURL } = require('../controllers/UrlController')
 
-router.post('/new', UrlQueries.createShortURL)
-
-router.get('/:shortUrl', UrlQueries.idFromShortURL)
+router.post('/new', createShortURL)
 
 module.exports = router

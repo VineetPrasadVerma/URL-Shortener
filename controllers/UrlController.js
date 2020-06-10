@@ -1,22 +1,20 @@
 const Url = require('../models/Url')
-const shortURLGenerator = require('../Utils/shortURLGenerator')
+const shortURLGenerator = require('../utils/shortURLGenerator')
 
-const UrlQueries = {}
-
-UrlQueries.readUrl = async (req, res) => {
+const readUrl = async (req, res) => {
   try {
     const Urls = await Url.find()
     return res.render('index', { Urls })
   } catch (e) {
     console.log(e)
-    return res.render('error', { error: { status: 500, message: 'Server Error' } })
+    return res.render('error', { error: { status: 500, message: 'Can\'t get data' } })
   }
 }
 
-UrlQueries.createShortURL = async (req, res) => {
+const createShortURL = async (req, res) => {
   try {
     const fullURL = req.body.fullURL
-
+    // console.log(fullURL)
     const timeStamp = Date.now()
     const shortUrlCode = shortURLGenerator.idToShortURL(timeStamp)
 
@@ -24,24 +22,24 @@ UrlQueries.createShortURL = async (req, res) => {
     // if (fetchedUrl) {
     //   res.redirect('/')
     // }
-
-    const newUrl = await Url.create({ _id: timeStamp, fullURL, shortURL: shortUrlCode })
+    // console.log(`${process.env.BASE_URL}${process.env.PORT}/${shortUrlCode}`)
+    await Url.create({ _id: timeStamp, fullURL, code: shortUrlCode, shortURL: `${process.env.BASE_URL}${process.env.PORT}/${shortUrlCode}` })
     res.redirect('/')
   } catch (e) {
     console.log(e)
-    return res.render('error', { error: { status: 500, message: 'Server Error' } })
+    return res.render('error', { error: { status: 500, message: 'Can\'t create short URL' } })
   }
 }
 
-UrlQueries.idFromShortURL = async (req, res) => {
+const idFromShortURL = async (req, res) => {
   try {
     // const id = shortURLGenerator.shortURLToId(req.params.shortURL)
     // console.log(id)
 
-    const url = await Url.findOne({ shortURL: req.params.shortUrl })
+    const url = await Url.findOne({ code: req.params.shortUrl })
 
     if (!url) {
-      return res.render('error', { error: { status: 404, message: 'Page not found' } })
+      return res.render('error', { error: { status: 404, message: 'URL not found' } })
     }
 
     url.clicks++
@@ -50,7 +48,7 @@ UrlQueries.idFromShortURL = async (req, res) => {
     res.redirect(url.fullURL)
   } catch (error) {
     console.log(error)
-    return res.render('error', { error: { status: 500, message: 'Server Error' } })
+    return res.render('error', { error: { status: 500, message: 'Can\'t find short URL ' } })
   }
 }
-module.exports = UrlQueries
+module.exports = { readUrl, createShortURL, idFromShortURL }

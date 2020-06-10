@@ -32,7 +32,7 @@
                 <% Urls.forEach(url => { %>
                     <tr>
                         <td><a href="<%= url.fullURL %> "><%= url.fullURL %>  </a></td>
-                        <td><a href="/url/<%= url.shortURL %> "><%= url.shortURL %>  </a></td>
+                        <td><a href="<%= url.shortURL %> "><%= url.shortURL %>  </a></td>
                         <td><%= url.clicks %></td>
                     </tr>
                 <% }) %> 
