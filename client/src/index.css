@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App{
+  padding: 100px;
+  text-align: center;
+}
+
+#heading{
+  font-family: monospace;
+}
+
+form{
+  padding-top: 75px;
+}
+
+#shrinkButton{
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+
+#shortUrl{
+  padding-top: 25px;
+}
+
+#shortUrl:hover{
+  cursor: pointer;
+}

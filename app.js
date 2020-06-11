@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const express = require('express')
 const { MongoClient } = require('mongodb')
+const cors = require('cors')
 const shortURLGenerator = require('./utils/shortURLGenerator')
 const app = express()
 
@@ -24,6 +25,7 @@ const connectDB = async () => {
 
 connectDB()
 
+app.use(cors())
 app.use(express.json())
 
 app.get('/:code', async (req, res) => {
@@ -53,7 +55,9 @@ app.post('/', async (req, res) => {
       code: shortUrlCode,
       shortURL: `${process.env.BASE_URL}${process.env.PORT}/${shortUrlCode}`
     })
-    console.log(insertCursor.insertedCount)
+
+    const shortURL = insertCursor.ops[0].shortURL
+    return res.status(200).json({ shortURL })
   } catch (ex) {
     res.status(500).json({ message: 'Can\'t generate short url' })
   }
