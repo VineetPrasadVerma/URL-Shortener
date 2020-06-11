@@ -25,15 +25,15 @@ function App () {
     setUrl('')
   }
 
-  const handleClick = async (event) => {
-    const res = await axios({
-      method: 'GET',
-      url: shortURL,
-      headers: { 'Content-type': 'application/json' }
-    })
+  // const handleClick = async (event) => {
+  // const res = await axios({
+  //   method: 'GET',
+  //   url: shortURL,
+  //   headers: { 'Content-type': 'application/json' }
+  // })
 
-    window.open(res.data[0].fullURL)
-  }
+  // window.open(shortURL)
+  // }
 
   return (
     <div className='App'>
@@ -49,7 +49,7 @@ function App () {
 
       {showShortUrl ? (
         <div id='container'>
-          <span id='shortUrl' onClick={handleClick}>{shortURL}</span>
+          <a href={shortURL}>{shortURL}</a>
           <CopyToClipboard text={shortURL} onCopy={() => setClipboardValue('Copied')}>
             <Button id='copyButton' variant='outlined' color='secondary'>{clipboardValue}</Button>
           </CopyToClipboard>

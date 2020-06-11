@@ -35,8 +35,8 @@ form{
   margin-top: 25px;
 }
 
-#shortUrl:hover{
-  cursor: pointer;
+a{
+  text-decoration: none;
 }
 
 #copyButton{
