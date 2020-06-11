@@ -5,6 +5,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 function App () {
   const [url, setUrl] = useState('')
+  const [clipboardValue, setClipboardValue] = useState('Copy')
   const [showShortUrl, setShowShortUrl] = useState(false)
   const [shortURL, setShortURL] = useState('')
 
@@ -20,6 +21,7 @@ function App () {
 
     setShowShortUrl(true)
     setShortURL(res.data.shortURL)
+    setClipboardValue('Copy')
     setUrl('')
   }
 
@@ -45,7 +47,14 @@ function App () {
         </Button>
       </form>
 
-      {showShortUrl ? (<p id='shortUrl' onClick={handleClick}>{shortURL}</p>) : ('')}
+      {showShortUrl ? (
+        <div id='container'>
+          <span id='shortUrl' onClick={handleClick}>{shortURL}</span>
+          <CopyToClipboard text={shortURL} onCopy={() => setClipboardValue('Copied')}>
+            <Button id='copyButton' variant='outlined' color='secondary'>{clipboardValue}</Button>
+          </CopyToClipboard>
+        </div>)
+        : ('')}
     </div>
 
   )

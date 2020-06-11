@@ -31,10 +31,14 @@ form{
 }
 
 
-#shortUrl{
-  padding-top: 25px;
+#container{
+  margin-top: 25px;
 }
 
 #shortUrl:hover{
   cursor: pointer;
+}
+
+#copyButton{
+  margin-left: 10px;
 }

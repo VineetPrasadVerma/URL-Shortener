@@ -35,7 +35,9 @@ app.get('/:code', async (req, res) => {
     const result = await searchCursor.toArray()
 
     if (result === []) res.status(404).json('Url not found')
-    return res.status(200).json(result)
+
+    return res.redirect(result[0].fullURL)
+    // return res.status(200).json(result)
   } catch (ex) {
     return res.status(500).json({ message: 'Can\'t fetch url' })
   }
