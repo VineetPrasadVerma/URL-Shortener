@@ -3,9 +3,9 @@ require('dotenv').config()
 const express = require('express')
 const { MongoClient } = require('mongodb')
 const cors = require('cors')
-const shortURLGenerator = require('./utils/shortURLGenerator')
-const app = express()
+const indexRoutes = require('./router/indexRoutes')
 
+// Database connection code
 let db
 
 const connectDB = async () => {
@@ -25,45 +25,16 @@ const connectDB = async () => {
 
 connectDB()
 
+const app = express()
+
 app.use(cors())
 app.use(express.json())
-
-app.get('/:code', async (req, res) => {
-  try {
-    const collection = db.collection('urls')
-    const searchCursor = await collection.find({ code: req.params.code })
-    const result = await searchCursor.toArray()
-
-    if (result === []) res.status(404).json('Url not found')
-
-    return res.redirect(result[0].fullURL)
-    // return res.status(200).json(result)
-  } catch (ex) {
-    return res.status(500).json({ message: 'Can\'t fetch url' })
-  }
+app.use((req, res, next) => {
+  req.db = db
+  next()
 })
 
-app.post('/', async (req, res) => {
-  try {
-    const fullURL = req.body.fullURL
-
-    const timeStamp = Date.now()
-    const shortUrlCode = shortURLGenerator.idToShortURL(timeStamp)
-
-    const collection = db.collection('urls')
-    const insertCursor = await collection.insertOne({
-      _id: timeStamp,
-      fullURL,
-      code: shortUrlCode,
-      shortURL: `${process.env.BASE_URL}${process.env.PORT}/${shortUrlCode}`
-    })
-
-    const shortURL = insertCursor.ops[0].shortURL
-    return res.status(200).json({ shortURL })
-  } catch (ex) {
-    res.status(500).json({ message: 'Can\'t generate short url' })
-  }
-})
+app.use('/', indexRoutes)
 
 // console.log(process.env)
 app.listen(process.env.PORT, () => {
